@@ -11,11 +11,16 @@ public class PlayerFlight : MonoBehaviour
     public Rigidbody rb,
         birdrb;
 
-    public Vector3 offset = new Vector3(0, 0, 2),
+    public Vector3 offset,
+        camOffset,
         lookdir;
 
     public float baseSpeed,
-        yaw;
+        roll,
+        pitch,
+        smoothRot,
+        smoothCam,
+        yawrot;
 
     public bool start,
         camFollow,
@@ -48,7 +53,7 @@ public class PlayerFlight : MonoBehaviour
         transform.Translate(x, 0, 0);
         transform.Translate(0, y, 0);
 
-        if (x > 0 || y > 0)
+        if (x != 0 || y != 0)
         {
             start = true;
             camFollow = true;
@@ -58,9 +63,17 @@ public class PlayerFlight : MonoBehaviour
     //Moves the player bird toward the point of flight
     public void BirdMovement()
     {
-        //find the yaw
-        yaw = Input.GetAxis("Horizontal") * Time.deltaTime;
-        yaw = -yaw * 5000;
+        //find the yaw and pitch
+        roll = Input.GetAxis("Horizontal") * Time.deltaTime;
+        pitch = Input.GetAxis("Vertical") * Time.deltaTime;
+        var rollrot = -roll * 2500;
+        var pitchrot = -pitch * 1500;
+        //TODO figure this out bettererererer
+        //yawrot = (rollrot + pitch) * 0.5f;
+        var campitch = -pitch * 250;
+        var camroll = -roll * 250;
+
+        baseSpeed = 10 + (roll*2 + pitch*2);
 
         //finds the rotation needed to look at
         var blook = Quaternion.LookRotation(gameObject.transform.position - bird.transform.position);
@@ -68,13 +81,13 @@ public class PlayerFlight : MonoBehaviour
 
         //moves the objects at a delay and rotates them accordingly
         bird.transform.position = Vector3.Lerp(bird.transform.position, gameObject.transform.position - offset, Time.deltaTime);
-        bird.transform.LookAt(gameObject.transform.position);
-        bird.transform.rotation = Quaternion.Lerp(bird.transform.rotation, Quaternion.Euler(new Vector3(bird.transform.rotation.x, bird.transform.rotation.y, yaw)), 20 * Time.deltaTime);
+        bird.transform.rotation = Quaternion.RotateTowards(bird.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
 
-        if(camFollow == true)
+
+        if (camFollow == true)
         {
-            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, clook, Time.deltaTime);
-            cam.transform.position = Vector3.Lerp(cam.transform.position, bird.transform.position - (offset * 0.5f), Time.deltaTime);
+            cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(new Vector3(campitch, cam.transform.rotation.y, camroll)), Time.deltaTime);
+            cam.transform.position = Vector3.Lerp(cam.transform.position, bird.transform.position + camOffset, smoothCam * Time.deltaTime);
         }
         else
         {
