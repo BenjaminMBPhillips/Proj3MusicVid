@@ -27,12 +27,12 @@ public class PlayerParticles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(deplete == true)
+        if (deplete == true)
         {
             Reduce();
         }
 
-        if(add == true)
+        if (add == true)
         {
             Increase();
         }
@@ -42,10 +42,24 @@ public class PlayerParticles : MonoBehaviour
     {
         if (other.gameObject.CompareTag("grass"))
         {
-            grass = Instantiate(grassPrefab, grassPos.transform);
-            ps = grass.GetComponent<ParticleSystem>();
-            add = true;
-            time = 1;
+            if (!grass)
+            {
+                grass = Instantiate(grassPrefab, grassPos.transform);
+                ps = grass.GetComponent<ParticleSystem>();
+                add = true;
+                time = 1;
+            }
+        }
+
+        if (other.gameObject.CompareTag("cloud"))
+        {
+            if (!cloud)
+            {
+                cloud = Instantiate(cloudPrefab, cloudPos.transform);
+                ps = cloud.GetComponent<ParticleSystem>();
+                add = true;
+                time = 1;
+            }
         }
     }
 
@@ -60,12 +74,22 @@ public class PlayerParticles : MonoBehaviour
                 StartCoroutine(Die(grass));
             }
         }
+
+        if (other.gameObject.CompareTag("cloud"))
+        {
+            if (cloud)
+            {
+                time = 100;
+                deplete = true;
+                StartCoroutine(Die(cloud));
+            }
+        }
     }
 
     public IEnumerator Die(GameObject toDestroy)
     {
         yield return new WaitForSeconds(2);
-        deplete = false;        
+        deplete = false;
         Destroy(toDestroy);
     }
 
@@ -81,7 +105,7 @@ public class PlayerParticles : MonoBehaviour
         var emission = ps.emission;
         time += Time.deltaTime * 100;
         emission.rateOverTime = time;
-        if(time >= 100)
+        if (time >= 100)
         {
             add = false;
         }

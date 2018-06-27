@@ -7,6 +7,7 @@ TagManager:
   - grassParticle
   - cloudParticle
   - grass
+  - cloud
   layers:
   - Default
   - TransparentFX
