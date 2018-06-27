@@ -14,17 +14,26 @@ public class FlockFlight : MonoBehaviour
         smoothCam,
         yawrot;
 
+    public bool enter;
+
     public Vector3 offset;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        enter = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (enter == true)
+        {
+            gameObject.transform.position = player.transform.position + offset * 3;
+            enter = false;
+        }
+
         //find the yaw and pitch
         roll = Input.GetAxis("Horizontal") * Time.deltaTime;
         pitch = Input.GetAxis("Vertical") * Time.deltaTime;
