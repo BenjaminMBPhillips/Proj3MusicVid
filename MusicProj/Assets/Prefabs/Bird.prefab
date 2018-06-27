@@ -207,7 +207,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 48ee6ca1106352e46b86c7ef8727f8ef, type: 3}
+  - {fileID: 2100002, guid: 17b0ab6db43f97143b38a13e80a6a222, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -233,7 +233,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1466314564630316}
-  m_Mesh: {fileID: 4300000, guid: 48ee6ca1106352e46b86c7ef8727f8ef, type: 3}
+  m_Mesh: {fileID: 4300000, guid: de77cff5fb377444e82828a69384ecb5, type: 3}
 --- !u!54 &54645997969851038
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -450,6 +450,10 @@ MonoBehaviour:
   cloudPrefab: {fileID: 1442954034091522, guid: 84db00c9872e9884f9cfb4a53ebe679d,
     type: 2}
   cloud: {fileID: 0}
+  ps: {fileID: 0}
+  time: 0
+  deplete: 0
+  add: 0
 --- !u!136 &136047486501032338
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -462,7 +466,7 @@ CapsuleCollider:
   m_Radius: 1.7322946
   m_Height: 3.464589
   m_Direction: 1
-  m_Center: {x: 0, y: 0.42999887, z: 1.1680963}
+  m_Center: {x: 0, y: -0.33, z: 1.1680963}
 --- !u!136 &136591732693128502
 CapsuleCollider:
   m_ObjectHideFlags: 1
