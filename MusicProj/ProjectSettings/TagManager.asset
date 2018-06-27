@@ -8,6 +8,7 @@ TagManager:
   - cloudParticle
   - grass
   - cloud
+  - addflock
   layers:
   - Default
   - TransparentFX

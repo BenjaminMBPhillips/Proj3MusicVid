@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerFlight : MonoBehaviour
 {
+    public CameraScript camScr;
 
     public GameObject bird,
         cam;
@@ -31,6 +32,8 @@ public class PlayerFlight : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         start = false;
         camFollow = false;
+        camScr = cam.GetComponent<CameraScript>();
+        camScr.Add(bird.transform);
     }
 
     void FixedUpdate()
@@ -75,16 +78,12 @@ public class PlayerFlight : MonoBehaviour
 
         baseSpeed = 10 + (roll*2 + pitch*2);
 
-        //finds the rotation needed to look at
-        var blook = Quaternion.LookRotation(gameObject.transform.position - bird.transform.position);
-        var clook = Quaternion.LookRotation(bird.transform.position - cam.transform.position);
-
         //moves the objects at a delay and rotates them accordingly
         bird.transform.position = Vector3.Lerp(bird.transform.position, gameObject.transform.position - offset, Time.deltaTime);
         bird.transform.rotation = Quaternion.RotateTowards(bird.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
 
 
-        if (camFollow == true)
+        /*if (camFollow == true)
         {
             cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(new Vector3(campitch, cam.transform.rotation.y, camroll)), Time.deltaTime);
             cam.transform.position = Vector3.Lerp(cam.transform.position, bird.transform.position + camOffset, smoothCam * Time.deltaTime);
@@ -92,6 +91,6 @@ public class PlayerFlight : MonoBehaviour
         else
         {
             cam.transform.LookAt(bird.transform.position);
-        }
+        }*/
     }
 }

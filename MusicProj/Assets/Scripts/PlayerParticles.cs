@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerParticles : MonoBehaviour
 {
+    public Flock flock;
+
     public GameObject grassPos,
         cloudPos,
         grassPrefab,
@@ -60,6 +62,11 @@ public class PlayerParticles : MonoBehaviour
                 add = true;
                 time = 1;
             }
+        }
+
+        if (other.gameObject.CompareTag("addflock"))
+        {
+            flock.AddToFlock();
         }
     }
 
