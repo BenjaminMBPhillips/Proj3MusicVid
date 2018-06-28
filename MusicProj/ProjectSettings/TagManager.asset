@@ -9,6 +9,8 @@ TagManager:
   - grass
   - cloud
   - addflock
+  - Controller
+  - removeflock
   layers:
   - Default
   - TransparentFX

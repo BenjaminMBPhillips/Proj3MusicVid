@@ -83,7 +83,7 @@ public class PlayerFlight : MonoBehaviour
         bird.transform.rotation = Quaternion.RotateTowards(bird.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
 
 
-        /*if (camFollow == true)
+        if (camFollow == true)
         {
             cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(new Vector3(campitch, cam.transform.rotation.y, camroll)), Time.deltaTime);
             cam.transform.position = Vector3.Lerp(cam.transform.position, bird.transform.position + camOffset, smoothCam * Time.deltaTime);
@@ -91,6 +91,6 @@ public class PlayerFlight : MonoBehaviour
         else
         {
             cam.transform.LookAt(bird.transform.position);
-        }*/
+        }
     }
 }

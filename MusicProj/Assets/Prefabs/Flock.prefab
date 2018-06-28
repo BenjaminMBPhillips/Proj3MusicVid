@@ -454,6 +454,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b038153edeb66b4fb2241dcebae6791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  baseSpeed: 0
+  roll: 0
+  pitch: 0
+  smoothRot: 0
+  smoothCam: 0
+  yawrot: 0
+  enter: 0
+  offset: {x: 0, y: 0.5, z: -2.5}
 --- !u!136 &136024887486814584
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -461,7 +470,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035589695012396}
   m_Material: {fileID: 13400000, guid: abb4eb4592a7d9f4ca8c913d7518961f, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.01
   m_Height: 4.64

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
-    public CameraScript cam;
+    public PlayerFlight cam;
 
     public List<GameObject> flockLeft = new List<GameObject>();
     public List<GameObject> flockRight = new List<GameObject>();
@@ -17,12 +17,13 @@ public class Flock : MonoBehaviour
         rightOffset,
         rightOffsetAdd,
         leftOffset,
-        leftOffsetAdd;
+        leftOffsetAdd,
+        offsetAdd;
 
     // Use this for initialization
     void Start()
     {
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScript>();
+        cam = GameObject.FindGameObjectWithTag("Controller").GetComponent<PlayerFlight>();
     }
 
     // Update is called once per frame
@@ -43,7 +44,8 @@ public class Flock : MonoBehaviour
             flockPos = player.transform.position + rightOffset;
             newflock.transform.position = flockPos;
             newscript.offset = rightOffset;
-            cam.Add(newflock.transform);
+            var newOffset = cam.camOffset + offsetAdd;
+            cam.camOffset = newOffset;
         }
         else if (flockRight.Count > flockLeft.Count) 
         {
@@ -52,7 +54,13 @@ public class Flock : MonoBehaviour
             flockPos = player.transform.position + leftOffset;
             newflock.transform.position = flockPos;
             newscript.offset = leftOffset;
-            cam.Add(newflock.transform);
+            var newOffset = cam.camOffset + offsetAdd;
+            cam.camOffset = newOffset;
         }
+    }
+
+    public void RemoveFromFlock()
+    {
+
     }
 }
