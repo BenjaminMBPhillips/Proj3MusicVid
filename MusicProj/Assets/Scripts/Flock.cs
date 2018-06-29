@@ -9,6 +9,8 @@ public class Flock : MonoBehaviour
     public List<GameObject> flockLeft = new List<GameObject>();
     public List<GameObject> flockRight = new List<GameObject>();
 
+    public bool flockside;
+
     public GameObject flockPrefab,
         newFlockMember,
         player;
@@ -23,6 +25,7 @@ public class Flock : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        flockside = true;
         cam = GameObject.FindGameObjectWithTag("Controller").GetComponent<PlayerFlight>();
     }
 
@@ -34,11 +37,10 @@ public class Flock : MonoBehaviour
 
     public void AddToFlock()
     {
-        var newflock = Instantiate(flockPrefab, player.transform, false);
-        var newscript = newflock.GetComponent<FlockFlight>();
-
-        if (flockLeft.Count >= flockRight.Count)
+        if (flockside == true)
         {
+            var newflock = Instantiate(flockPrefab, player.transform, false);
+            var newscript = newflock.GetComponent<FlockFlight>();
             flockRight.Add(newflock);
             rightOffset = rightOffset + rightOffsetAdd;
             flockPos = player.transform.position + rightOffset;
@@ -47,8 +49,10 @@ public class Flock : MonoBehaviour
             var newOffset = cam.camOffset + offsetAdd;
             cam.camOffset = newOffset;
         }
-        else if (flockRight.Count > flockLeft.Count) 
+        else 
         {
+            var newflock = Instantiate(flockPrefab, player.transform, false);
+            var newscript = newflock.GetComponent<FlockFlight>();
             flockLeft.Add(newflock);
             leftOffset = leftOffset + leftOffsetAdd;
             flockPos = player.transform.position + leftOffset;
@@ -61,6 +65,23 @@ public class Flock : MonoBehaviour
 
     public void RemoveFromFlock()
     {
-
+        if(flockside == true)
+        {
+            var removelast = flockRight.Count;
+            var removeflock = flockRight[removelast - 1];
+            var script = removeflock.GetComponent<FlockFlight>();
+            script.leave = true;
+            var Offset = cam.camOffset - offsetAdd;
+            cam.camOffset = Offset;
+        }
+        else
+        {
+            var removelast = flockLeft.Count;
+            var removeflock = flockLeft[removelast - 1];
+            var script = removeflock.GetComponent<FlockFlight>();
+            script.leave = true;
+            var Offset = cam.camOffset = offsetAdd;
+            cam.camOffset = Offset;
+        }
     }
 }

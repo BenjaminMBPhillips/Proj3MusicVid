@@ -11,6 +11,7 @@ TagManager:
   - addflock
   - Controller
   - removeflock
+  - WindPoint
   layers:
   - Default
   - TransparentFX

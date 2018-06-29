@@ -6,19 +6,26 @@ public class PlayerParticles : MonoBehaviour
 {
     public Flock flock;
 
+    public PlayerFlight bird;
+
     public GameObject grassPos,
         cloudPos,
+        windcirclePos,
         grassPrefab,
         grass,
         cloudPrefab,
-        cloud;
+        cloud,
+        windcircleprefab,
+        windcircle;
 
     public ParticleSystem ps;
 
-    public float time;
+    public float time,
+        cooldown;
 
     public bool deplete,
-        add;
+        add,
+        boosting;
 
     // Use this for initialization
     void Start()
@@ -38,6 +45,8 @@ public class PlayerParticles : MonoBehaviour
         {
             Increase();
         }
+
+        SpeedBurst();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,7 +75,33 @@ public class PlayerParticles : MonoBehaviour
 
         if (other.gameObject.CompareTag("addflock"))
         {
-            flock.AddToFlock();
+            flock.AddToFlock();          
+            if(flock.flockside == true)
+            {
+                flock.flockside = false;
+            }
+            else
+            {
+                flock.flockside = true;
+            }
+        }
+
+        if (other.gameObject.CompareTag("removeflock"))
+        {
+            flock.RemoveFromFlock();
+            if(flock.flockside == true)
+            {
+                flock.flockside = false; 
+            }
+            else
+            {
+                flock.flockside = true;
+            }
+        }
+
+        if (other.gameObject.CompareTag("WindPoint"))
+        {
+            boosting = true;
         }
     }
 
@@ -117,4 +152,36 @@ public class PlayerParticles : MonoBehaviour
             add = false;
         }
     }
+
+    void SpeedBurst()
+    {
+        if(boosting == true)
+        {
+            bird.baseSpeed = 50;
+            windcircle = Instantiate(windcircleprefab, windcirclePos.transform);
+            time = 100;
+            boosting = false;
+        }
+
+        else if(bird.baseSpeed > 10)
+        {
+            bird.baseSpeed -= Time.deltaTime * cooldown;
+            if (windcircle)
+            {
+                var wind = windcircle.GetComponent<ParticleSystem>();
+                var windemission = wind.emission;
+                time -= Time.deltaTime * 10;
+                windemission.rateOverTime = time;
+                if (time < 40)
+                {
+                    windcircle.transform.position = Vector3.Lerp(gameObject.transform.position, gameObject.transform.position + new Vector3(0,0,-10), Time.deltaTime);
+                }
+                if (time < 30)
+                {
+                    Destroy(windcircle);
+                }
+            }
+        }
+    }
+    
 }

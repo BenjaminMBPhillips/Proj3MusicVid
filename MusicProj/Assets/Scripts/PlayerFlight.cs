@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerFlight : MonoBehaviour
 {
-    public CameraScript camScr;
-
     public GameObject bird,
         cam;
 
@@ -32,8 +30,6 @@ public class PlayerFlight : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         start = false;
         camFollow = false;
-        camScr = cam.GetComponent<CameraScript>();
-        camScr.Add(bird.transform);
     }
 
     void FixedUpdate()
@@ -71,12 +67,8 @@ public class PlayerFlight : MonoBehaviour
         pitch = Input.GetAxis("Vertical") * Time.deltaTime;
         var rollrot = -roll * 2500;
         var pitchrot = -pitch * 1500;
-        //TODO figure this out bettererererer
-        //yawrot = (rollrot + pitch) * 0.5f;
         var campitch = -pitch * 250;
         var camroll = -roll * 250;
-
-        baseSpeed = 10 + (roll*2 + pitch*2);
 
         //moves the objects at a delay and rotates them accordingly
         bird.transform.position = Vector3.Lerp(bird.transform.position, gameObject.transform.position - offset, Time.deltaTime);
