@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
         } while (!canActivateCharacter);
 
         PreviousPlayerChunkPosition = Generator.GetChunkPosition(Player.position);
-        Player.position = new Vector3(Player.position.x, Generator.GetTerrainHeight(Player.position) + 0.5f, Player.position.z);
+        Player.position = new Vector3(Player.position.x, Generator.GetTerrainHeight(Player.position) + 20, Player.position.z);
         Player.gameObject.SetActive(true);
     }
 
