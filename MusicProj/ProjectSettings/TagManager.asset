@@ -12,6 +12,8 @@ TagManager:
   - Controller
   - removeflock
   - WindPoint
+  - ShowOnPause
+  - ShowOnPlay
   layers:
   - Default
   - TransparentFX
