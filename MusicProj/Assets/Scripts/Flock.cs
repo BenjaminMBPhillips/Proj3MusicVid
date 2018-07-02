@@ -39,7 +39,7 @@ public class Flock : MonoBehaviour
     {
         if (flockside == true)
         {
-            var newflock = Instantiate(flockPrefab, player.transform, false);
+            var newflock = Instantiate(flockPrefab, player.transform, true);
             var newscript = newflock.GetComponent<FlockFlight>();
             flockRight.Add(newflock);
             rightOffset = rightOffset + rightOffsetAdd;
@@ -51,7 +51,7 @@ public class Flock : MonoBehaviour
         }
         else 
         {
-            var newflock = Instantiate(flockPrefab, player.transform, false);
+            var newflock = Instantiate(flockPrefab, player.transform, true);
             var newscript = newflock.GetComponent<FlockFlight>();
             flockLeft.Add(newflock);
             leftOffset = leftOffset + leftOffsetAdd;

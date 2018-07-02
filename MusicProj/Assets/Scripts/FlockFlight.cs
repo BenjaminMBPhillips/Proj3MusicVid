@@ -7,8 +7,7 @@ public class FlockFlight : MonoBehaviour
 
     public GameObject player;
 
-    public float baseSpeed,
-        roll,
+    public float roll,
         pitch,
         smoothRot,
         smoothCam,
@@ -19,6 +18,8 @@ public class FlockFlight : MonoBehaviour
 
     public Vector3 offset;
 
+    public List<Vector3> playPos = new List<Vector3>();
+
     // Use this for initialization
     void Start()
     {
@@ -28,7 +29,7 @@ public class FlockFlight : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {  
         if (enter == true)
         {
             gameObject.transform.position = player.transform.position + offset * 3;
@@ -48,11 +49,9 @@ public class FlockFlight : MonoBehaviour
         var rollrot = -roll * 2500;
         var pitchrot = -pitch * 1500;
 
-        baseSpeed = 10 + (roll * 2 + pitch * 2);
-
         //moves the objects at a delay and rotates them accordingly
         gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, player.transform.position + offset, Time.deltaTime);
-        gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
+        gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);        
     }
 
     public IEnumerator Destroy()
@@ -60,4 +59,9 @@ public class FlockFlight : MonoBehaviour
         yield return new WaitForSeconds(4);
         Destroy(gameObject);
     }
+
+    public void Movement()
+    {
+        
+    } 
 }
