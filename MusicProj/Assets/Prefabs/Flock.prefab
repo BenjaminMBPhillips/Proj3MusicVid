@@ -455,14 +455,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  baseSpeed: 0
   roll: 0
   pitch: 0
   smoothRot: 0
   smoothCam: 0
   yawrot: 0
   enter: 0
+  leave: 0
   offset: {x: 0, y: 0.5, z: -2.5}
+  playerpos: {x: 0, y: 0, z: 0}
+  playPos: []
 --- !u!136 &136024887486814584
 CapsuleCollider:
   m_ObjectHideFlags: 1

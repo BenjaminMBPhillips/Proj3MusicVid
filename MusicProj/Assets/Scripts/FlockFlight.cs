@@ -7,8 +7,7 @@ public class FlockFlight : MonoBehaviour
 
     public GameObject player;
 
-    public float baseSpeed,
-        roll,
+    public float roll,
         pitch,
         smoothRot,
         smoothCam,
@@ -17,18 +16,24 @@ public class FlockFlight : MonoBehaviour
     public bool enter,
         leave;
 
-    public Vector3 offset;
+    public Vector3 offset,
+        playerpos;
+
+    public List<Vector3> playPos = new List<Vector3>();
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         enter = true;
+        playerpos = player.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerpos = player.transform.position;
+
         if (enter == true)
         {
             gameObject.transform.position = player.transform.position + offset * 3;
@@ -42,19 +47,21 @@ public class FlockFlight : MonoBehaviour
             leave = false;
         }
 
-        //find the yaw and pitch
-        roll = Input.GetAxis("Horizontal") * Time.deltaTime;
-        pitch = Input.GetAxis("Vertical") * Time.deltaTime;
-        var rollrot = -roll * 2500;
-        var pitchrot = -pitch * 1500;
+        if (enter == false && leave == false)
+        {
+            //find the yaw and pitch
+            roll = Input.GetAxis("Horizontal") * Time.deltaTime;
+            pitch = Input.GetAxis("Vertical") * Time.deltaTime;
+            var rollrot = -roll * 2500;
+            var pitchrot = -pitch * 1500;
 
-        baseSpeed = 10 + (roll * 2 + pitch * 2);
 
-        //moves the objects at a delay and rotates them accordingly
-        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, player.transform.position + offset, Time.deltaTime);
-        gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
+            //moves the objects at a delay and rotates them accordingly
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, playerpos + offset, Time.deltaTime);
+
+            gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
+        }        
     }
-
     public IEnumerator Destroy()
     {
         yield return new WaitForSeconds(4);
