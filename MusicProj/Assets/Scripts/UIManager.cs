@@ -5,59 +5,56 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
-
+    //Pause and play objects
     GameObject[] pauseObjects;
     GameObject[] playObjects;
 
-    float Countdown = 0.2f;
+    //Pausing coroutine, slowly decreses timescale
+    IEnumerator ScaleTime(float start, float end, float time)
+    {
+        float lastTime = Time.realtimeSinceStartup;
+        float timer = 0.0f;
 
-	// Use this for initialization
-	void Start () {
+        while (timer < time)
+        {
+            Time.timeScale = Mathf.Lerp(start, end, timer / time);
+            timer += (Time.realtimeSinceStartup - lastTime);
+            lastTime = Time.realtimeSinceStartup;
+            yield return null;
+        }
+
+        Time.timeScale = end;
+    }
+
+    // Use this for initialization
+    void Start () {
+
         //Pause controls
         Time.timeScale = 0;
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-        playObjects = GameObject.FindGameObjectsWithTag("ShowOnPlay");
         HidePaused();
+
+        //Main menu controls
+        playObjects = GameObject.FindGameObjectsWithTag("ShowOnPlay");
         ShowPlay();
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        //Pause control
-        if (Input.GetKeyDown("escape"))
+        //If pause key is hit and timescale is 1 then run coroutine and show pause objects
+        if (Input.GetKeyDown("escape") && Time.timeScale == 1)
         {
-            if (Time.timeScale == 1)
-            {
-                Time.timeScale = 0;
-                ShowPaused();
-   
-            }
-            else if (Time.timeScale == 0)
-            {
-                Time.timeScale = 1;
-                HidePaused();
-            }
-        } 
-    }
-
-    public void PauseControl()
-    //Determines if the game is paused or not
-    {
-        if (Time.timeScale == 1)
-        {
-            if (Countdown < 0)
-            {
-                Time.timeScale = 0;
-                ShowPaused();
-            }
+            StartCoroutine(ScaleTime(1.0f, 0.0f, 1.0f));
+            ShowPaused();
         }
-        else if (Time.timeScale == 0)
+        //If pause key is hit and timescale is 0 then run coroutine and hide pause objects
+        if (Input.GetKeyDown("escape") && Time.timeScale == 0)
         {
-            Time.timeScale = 1;
+            StartCoroutine(ScaleTime(0.0f, 1.0f, 1.0f));
             HidePaused();
         }
     }
+
     //shows objects with ShowOnPause tag
     public void ShowPaused()
     {
@@ -66,12 +63,20 @@ public class UIManager : MonoBehaviour {
             g.SetActive(true);
         }
     }
-
+    //Shows objects with ShowOnPlay tag
     public void ShowPlay()
     {
         foreach (GameObject h in playObjects)
         {
             h.SetActive(true);
+        }
+    }
+    //Hides object with ShowOnPlay tag
+    public void HidePlay()
+    {
+        foreach (GameObject h in playObjects)
+        {
+            h.SetActive(false);
         }
     }
     //hides objects with ShowOnPause tag
@@ -82,22 +87,15 @@ public class UIManager : MonoBehaviour {
             g.SetActive(false);
         }
     }
-
-    //Hides object with ShowOnPlay tag
-    public void HidePlay()
-    {
-        foreach (GameObject h in playObjects)
-        {
-            h.SetActive(false);
-        }
-    }
+    //Scene changes
     public void MainMenu()
     {
         SceneManager.LoadScene("Scene");
     }
+    //Sets timescale to 1 and hides pause menu
     public void Resume()
     {
-        Time.timeScale = 1;
+        StartCoroutine(ScaleTime(0.0f, 1.0f, 1.0f));
         HidePaused();
     }
     public void Play()
