@@ -11,7 +11,8 @@ public class FlockFlight : MonoBehaviour
         pitch,
         smoothRot,
         smoothCam,
-        yawrot;
+        yawrot,
+        move;
 
     public bool enter,
         leave;
@@ -57,9 +58,12 @@ public class FlockFlight : MonoBehaviour
 
 
             //moves the objects at a delay and rotates them accordingly
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, playerpos + offset, Time.deltaTime);
+          //  gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, player.transform.position + offset, move * Time.deltaTime);
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, player.transform.position + offset, move);
 
             gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
+
+            //gameObject.transform.LookAt(player.transform);
         }        
     }
     public IEnumerator Destroy()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerParticles : MonoBehaviour
 {
-    public Flock flock;
+    public FlockController flock;
 
     public PlayerFlight bird;
 
@@ -75,28 +75,12 @@ public class PlayerParticles : MonoBehaviour
 
         if (other.gameObject.CompareTag("addflock"))
         {
-            flock.AddToFlock();          
-            if(flock.flockside == true)
-            {
-                flock.flockside = false;
-            }
-            else
-            {
-                flock.flockside = true;
-            }
+            flock.NewFlockMember();
         }
 
         if (other.gameObject.CompareTag("removeflock"))
         {
-            flock.RemoveFromFlock();
-            if(flock.flockside == true)
-            {
-                flock.flockside = false; 
-            }
-            else
-            {
-                flock.flockside = true;
-            }
+           
         }
 
         if (other.gameObject.CompareTag("WindPoint"))

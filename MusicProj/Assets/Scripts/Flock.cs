@@ -13,7 +13,8 @@ public class Flock : MonoBehaviour
 
     public GameObject flockPrefab,
         newFlockMember,
-        player;
+        player,
+        flockParent;
 
     public Vector3 flockPos,
         rightOffset,
@@ -22,24 +23,22 @@ public class Flock : MonoBehaviour
         leftOffsetAdd,
         offsetAdd;
 
+    public int flocksize;
+
     // Use this for initialization
     void Start()
     {
         flockside = true;
+        flocksize = 0;
         cam = GameObject.FindGameObjectWithTag("Controller").GetComponent<PlayerFlight>();
+        flockParent = GameObject.FindGameObjectWithTag("FlockParent");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    
     public void AddToFlock()
     {
         if (flockside == true)
         {
-            var newflock = Instantiate(flockPrefab, player.transform, false);
+            var newflock = Instantiate(flockPrefab, flockParent.transform, false);
             var newscript = newflock.GetComponent<FlockFlight>();
             flockRight.Add(newflock);
             rightOffset = rightOffset + rightOffsetAdd;
@@ -48,10 +47,11 @@ public class Flock : MonoBehaviour
             newscript.offset = rightOffset;
             var newOffset = cam.camOffset + offsetAdd;
             cam.camOffset = newOffset;
+            flocksize++;
         }
         else 
         {
-            var newflock = Instantiate(flockPrefab, player.transform, false);
+            var newflock = Instantiate(flockPrefab, flockParent.transform, false);
             var newscript = newflock.GetComponent<FlockFlight>();
             flockLeft.Add(newflock);
             leftOffset = leftOffset + leftOffsetAdd;
@@ -60,6 +60,7 @@ public class Flock : MonoBehaviour
             newscript.offset = leftOffset;
             var newOffset = cam.camOffset + offsetAdd;
             cam.camOffset = newOffset;
+            flocksize++;
         }
     }
 
@@ -73,6 +74,7 @@ public class Flock : MonoBehaviour
             script.leave = true;
             var Offset = cam.camOffset - offsetAdd;
             cam.camOffset = Offset;
+            flocksize--;
         }
         else
         {
@@ -82,6 +84,7 @@ public class Flock : MonoBehaviour
             script.leave = true;
             var Offset = cam.camOffset = offsetAdd;
             cam.camOffset = Offset;
+            flocksize--;
         }
     }
 }
