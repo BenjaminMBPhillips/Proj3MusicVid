@@ -6,7 +6,7 @@ public class PlayerParticles : MonoBehaviour
 {
     public FlockController flock;
 
-    public PlayerFlight bird;
+    public Flight bird;
 
     public GameObject grassPos,
         cloudPos,
@@ -46,7 +46,7 @@ public class PlayerParticles : MonoBehaviour
             Increase();
         }
 
-        SpeedBurst();
+      //  SpeedBurst();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -137,7 +137,7 @@ public class PlayerParticles : MonoBehaviour
         }
     }
 
-    void SpeedBurst()
+    /*void SpeedBurst()
     {
         if(boosting == true)
         {
@@ -166,6 +166,6 @@ public class PlayerParticles : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
     
 }

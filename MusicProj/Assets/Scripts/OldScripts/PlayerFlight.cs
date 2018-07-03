@@ -34,11 +34,6 @@ public class PlayerFlight : MonoBehaviour
 
     void FixedUpdate()
     {
-        //sets the players velocity so it moves forward
-        if (start == true)
-        {
-            rb.velocity = transform.forward * baseSpeed;
-        }
         PlayerInput();
         BirdMovement();
     }
@@ -46,15 +41,13 @@ public class PlayerFlight : MonoBehaviour
     //player input
     public void PlayerInput()
     {
+
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 10.0f;
         var y = Input.GetAxis("Vertical") * Time.deltaTime * 10.0f;
 
-        transform.Translate(x, 0, 0);
-        transform.Translate(0, y, 0);
 
         if (x != 0 || y != 0)
         {
-            start = true;
             camFollow = true;
         }
     }
@@ -71,18 +64,18 @@ public class PlayerFlight : MonoBehaviour
         var camroll = -roll * 250;
 
         //moves the objects at a delay and rotates them accordingly
-        bird.transform.position = Vector3.Lerp(bird.transform.position, gameObject.transform.position - offset, Time.deltaTime);
-        bird.transform.rotation = Quaternion.RotateTowards(bird.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
+        transform.position += transform.forward * baseSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime);
 
 
         if (camFollow == true)
         {
             cam.transform.rotation = Quaternion.Slerp(cam.transform.rotation, Quaternion.Euler(new Vector3(campitch, cam.transform.rotation.y, camroll)), Time.deltaTime);
-            cam.transform.position = Vector3.Lerp(cam.transform.position, bird.transform.position + camOffset, smoothCam * Time.deltaTime);
+            cam.transform.position = Vector3.Lerp(cam.transform.position, transform.position + camOffset, smoothCam * Time.deltaTime);
         }
         else
         {
-            cam.transform.LookAt(bird.transform.position);
+            cam.transform.LookAt(transform.position);
         }
     }
 }
