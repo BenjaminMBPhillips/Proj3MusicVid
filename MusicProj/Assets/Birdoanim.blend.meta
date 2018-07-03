@@ -1,65 +1,74 @@
 fileFormatVersion: 2
-guid: df06469bd143e694182f9b24abb2c556
+guid: dc0d553791e8d094b815c645ce7981ab
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Body
-    100004: Bone
-    100006: Bone 1
-    100008: Bone_end
-    100010: Bone_end 1
-    100012: Head
-    100014: LeftWing
-    100016: Leg.L
-    100018: Leg.R
-    100020: RightWing
-    100022: Sphere.000
-    100024: Sphere.001
-    100026: Sphere.002
-    100028: Sphere.003
-    400000: //RootNode
-    400002: Body
-    400004: Bone
-    400006: Bone 1
-    400008: Bone_end
-    400010: Bone_end 1
-    400012: Head
-    400014: LeftWing
-    400016: Leg.L
-    400018: Leg.R
-    400020: RightWing
-    400022: Sphere.000
-    400024: Sphere.001
-    400026: Sphere.002
-    400028: Sphere.003
-    2100000: No Name
+    100000: Armature
+    100002: Armature_001
+    100004: //RootNode
+    100006: Body
+    100008: Bone
+    100010: Bone_0
+    100012: Bone_001
+    100014: Bone_1
+    100016: Bone_2
+    100018: Bone_3
+    100020: Head
+    100022: Leg_L
+    100024: Leg_R
+    100026: Sphere_000
+    100028: Sphere_001
+    100030: Sphere_002
+    100032: Sphere_003
+    100034: Wing_L
+    100036: Wing_R
+    400000: Armature
+    400002: Armature_001
+    400004: //RootNode
+    400006: Body
+    400008: Bone
+    400010: Bone_0
+    400012: Bone_001
+    400014: Bone_1
+    400016: Bone_2
+    400018: Bone_3
+    400020: Head
+    400022: Leg_L
+    400024: Leg_R
+    400026: Sphere_000
+    400028: Sphere_001
+    400030: Sphere_002
+    400032: Sphere_003
+    400034: Wing_L
+    400036: Wing_R
+    2100000: unnamed
     2300000: Body
     2300002: Head
-    2300004: Leg.L
-    2300006: Leg.R
+    2300004: Leg_L
+    2300006: Leg_R
     3300000: Body
     3300002: Head
-    3300004: Leg.L
-    3300006: Leg.R
-    4300000: Leg.R
-    4300002: Sphere.002
-    4300004: Sphere.000
-    4300006: Sphere.003
-    4300008: Sphere.001
+    3300004: Leg_L
+    3300006: Leg_R
+    4300000: Sphere_002
+    4300002: Sphere_000
+    4300004: Sphere_003
+    4300006: Sphere_001
+    4300008: Leg_R
     4300010: Head
     4300012: Body
-    4300014: Leg.L
-    7400000: RightWing|LeftWingAction
-    7400002: RightWing|RightWingAction
-    7400004: LeftWing|LeftWingAction
-    7400006: LeftWing|RightWingAction
-    7400008: LeftWing|RightWingAction (1)
+    4300014: Leg_L
+    7400000: Default Take
+    7400002: Action
+    7400004: Armature_001Action
+    7400006: Armature_001Action_001
+    7400008: LeftWingAction
+    7400010: RightWingAction
     9500000: //RootNode
-    13700000: Sphere.000
-    13700002: Sphere.001
-    13700004: Sphere.002
-    13700006: Sphere.003
+    13700000: Sphere_000
+    13700002: Sphere_001
+    13700004: Sphere_002
+    13700006: Sphere_003
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -89,10 +98,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RightWing|LeftWingAction
-      takeName: RightWing|LeftWingAction
+      name: Default Take
+      takeName: Default Take
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -117,17 +126,17 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: RightWing|RightWingAction
-      takeName: RightWing|RightWingAction
+      name: Action
+      takeName: Action
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 73
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -145,17 +154,17 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LeftWing|LeftWingAction
-      takeName: LeftWing|LeftWingAction
+      name: Armature_001Action
+      takeName: Armature_001Action
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 73
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -173,17 +182,73 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: LeftWing|RightWingAction
-      takeName: LeftWing|RightWingAction
+      name: Armature_001Action_001
+      takeName: Armature_001Action_001
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 73
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LeftWingAction
+      takeName: LeftWingAction
+      firstFrame: 1
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RightWingAction
+      takeName: RightWingAction
+      firstFrame: 1
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
