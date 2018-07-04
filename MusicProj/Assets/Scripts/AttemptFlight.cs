@@ -7,9 +7,14 @@ public class AttemptFlight : MonoBehaviour
     public GameObject birdModel,
         modelContainer;
 
-    public float smoothRot;
+    public float smoothRot,
+        roll;
 
-    public float speed;
+    public Input keydownRight,
+        keydownLeft;
+
+    public float speed,
+        ySpeed;
 
     public Vector3 offset;
 
@@ -35,12 +40,39 @@ public class AttemptFlight : MonoBehaviour
     {
         var y = Input.GetAxis("Vertical");
         var x = Input.GetAxis("Horizontal");
+        
+        if(y < 0)
+        {
+            ySpeed += Time.deltaTime * 2;
+            if(ySpeed > 15)
+            {
+                ySpeed = 15;
+            }
+        }
+        else if(ySpeed > 0  && y == 0)
+        {
+            ySpeed -= Time.deltaTime * 2;
+        }
+        else if(ySpeed > 0 && y > 0)
+        {
+            ySpeed -= Time.deltaTime * 4;
+        }
+
+        speed = 20 + ySpeed;
+
+        if(speed < 20)
+        {
+            speed = 20;
+        }
 
         rb.velocity = transform.forward * speed + transform.up * y * speed;
+
+        print(rb.velocity);
         //rb.velocity = transform.up * y * speed;
         transform.Rotate(0, x, 0);
 
         float CheckTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
+
         if (CheckTerrainHeight > transform.position.y)
         {
             transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1, transform.position.z);
@@ -48,20 +80,17 @@ public class AttemptFlight : MonoBehaviour
     }
     #endregion
 
+    #region rotation
     void ModelMoveAndRotate()
     {
-        //find the yaw and pitch
-        var roll = Input.GetAxis("Horizontal") * Time.deltaTime;
-        var pitch = Input.GetAxis("Vertical") * Time.deltaTime;
-        rollrot = -roll * 2500;
-        var pitchrot = -pitch * 1500;
-
         //moves the objects at a delay and rotates them accordingly
         birdModel.transform.position = Vector3.Lerp(birdModel.transform.position, gameObject.transform.position, Time.deltaTime);
 
         birdModel.transform.LookAt(transform.position, transform.up);
 
-        modelContainer.transform.Rotate(Input.GetAxis("Horizontal"), 0.0f, 0.0f);
+        // float modelxRot = Input.GetAxis("Horizontal");
+
+        //modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
 
         #region Attempts
         /*Vector3 target = transform.position - birdModel.transform.position;
@@ -91,7 +120,9 @@ public class AttemptFlight : MonoBehaviour
 
         //birdModel.transform.rotation = Quaternion.RotateTowards(birdModel.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime); 
         #endregion
-    }
+    } 
+
+    #endregion
 
     #region Camera
     void CamFollow()
@@ -101,7 +132,5 @@ public class AttemptFlight : MonoBehaviour
         Camera.main.transform.position = Camera.main.transform.position * bias + camMove * (1.0f - bias);
         Camera.main.transform.LookAt(birdModel.transform.position + transform.forward * 30);
     }
-    #endregion
-
-   
+    #endregion    
 }
