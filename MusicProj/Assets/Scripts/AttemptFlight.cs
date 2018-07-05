@@ -7,6 +7,8 @@ public class AttemptFlight : MonoBehaviour
     public GameObject birdModel,
         modelContainer;
 
+    public PlayerParticles particles;
+
     public float smoothRot,
         roll;
 
@@ -14,7 +16,8 @@ public class AttemptFlight : MonoBehaviour
         keydownLeft;
 
     public float speed,
-        ySpeed;
+        ySpeed,
+        xSpeed;
 
     public Vector3 offset;
 
@@ -40,54 +43,68 @@ public class AttemptFlight : MonoBehaviour
     {
         var y = Input.GetAxis("Vertical");
         var x = Input.GetAxis("Horizontal");
-        
 
+        #region Speed
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            ySpeed += Time.deltaTime * 2;
-            if(ySpeed > 30)
+            ySpeed += Time.deltaTime * 4;
+            if (ySpeed > 30)
             {
-                ySpeed = 30;
+                ySpeed = 50;
             }
         }
-        
-        if(y < 0)
+
+        if (y < 0)
         {
             ySpeed += Time.deltaTime * 2;
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 ySpeed += Time.deltaTime * 4;
 
-                if(ySpeed > 30)
+                if (ySpeed > 30)
                 {
-                    ySpeed = 30;
+                    ySpeed = 80;
                 }
             }
-            else if(!Input.GetKey(KeyCode.LeftShift) && ySpeed > 15)
+            else if (!Input.GetKey(KeyCode.LeftShift) && ySpeed > 15)
             {
                 ySpeed = 15;
             }
         }
-        else if(ySpeed > 0  && y == 0 && !Input.GetKey(KeyCode.LeftShift))
+        else if (ySpeed > 0 && y == 0 && !Input.GetKey(KeyCode.LeftShift))
         {
-            ySpeed -= Time.deltaTime * 2;
+            if (ySpeed > 30)
+            {
+                ySpeed -= Time.deltaTime * 5;
+            }
+            else
+            {
+                ySpeed -= Time.deltaTime * 2;
+            }
         }
-        else if(ySpeed > 0 && y > 0 && !Input.GetKey(KeyCode.LeftShift))
+        else if (ySpeed > 0 && y > 0 && !Input.GetKey(KeyCode.LeftShift))
         {
-            ySpeed -= Time.deltaTime * 4;
+            if(ySpeed  > 30)
+            {
+                ySpeed -= Time.deltaTime * 6;
+            }
+            else
+            {
+                ySpeed -= Time.deltaTime * 4;
+            }
         }
 
         speed = 20 + ySpeed;
 
-        if(speed < 20)
+        if (speed < 20)
         {
             speed = 20;
-        }        
+        }
+        #endregion
 
+        #region Position
         rb.velocity = transform.forward * speed + transform.up * y * speed;
-
-        print(rb.velocity);
-        //rb.velocity = transform.up * y * speed;
+        
         transform.Rotate(0, x, 0);
 
         float CheckTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
@@ -99,10 +116,11 @@ public class AttemptFlight : MonoBehaviour
             transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1, transform.position.z);
         }
 
-        if(CheckTerrainHeightModel > modelContainer.transform.position.y)
+        if (CheckTerrainHeightModel > modelContainer.transform.position.y)
         {
             modelContainer.transform.position = new Vector3(modelContainer.transform.position.x, CheckTerrainHeightModel + 1, modelContainer.transform.position.z);
         }
+        #endregion
 
     }
     #endregion
@@ -125,10 +143,6 @@ public class AttemptFlight : MonoBehaviour
         {
             modelContainer.transform.Rotate((modelContainer.transform.rotation.y * -1) * 2, 0, 0);
         }
-
-        
-
-
 
 
         #region Attempts
@@ -159,7 +173,7 @@ public class AttemptFlight : MonoBehaviour
 
         //birdModel.transform.rotation = Quaternion.RotateTowards(birdModel.transform.rotation, Quaternion.Euler(new Vector3(pitchrot, 0, rollrot)), smoothRot * Time.deltaTime); 
         #endregion
-    } 
+    }
 
     #endregion
 

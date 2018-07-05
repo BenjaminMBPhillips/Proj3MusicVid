@@ -4,168 +4,112 @@ using UnityEngine;
 
 public class PlayerParticles : MonoBehaviour
 {
-    public FlockController flock;
+    public AttemptFlight bird;
 
-    public Flight bird;
+    public GameObject windPrefab,
+        windParticle,
+        windPos,
+        waterPrefab,
+        waterParticleL,
+        waterParticleR,
+        waterPosL,
+        waterPosR;
 
-    public GameObject grassPos,
-        cloudPos,
-        windcirclePos,
-        grassPrefab,
-        grass,
-        cloudPrefab,
-        cloud,
-        windcircleprefab,
-        windcircle;
+    public GameObject windline1L,
+        windline1R,
+        windline2L,
+        windline2R,
+        windline3L,
+        windline3R;
 
-    public ParticleSystem ps;
+    public float depleteFrom;
 
-    public float time,
-        cooldown;
-
-    public bool deplete,
-        add,
-        boosting;
-
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (deplete == true)
+        WindEffect();
+    }
+
+    public void WindEffect()
+    {
+        if (bird.speed > 50)
         {
-            Reduce();
+            windline3L.SetActive(true);
+            windline3R.SetActive(true);
+            /*if (!windParticle)
+            {
+                windParticle = Instantiate(windPrefab, windPos.transform);
+                depleteFrom = 100;
+            }*/
         }
 
-        if (add == true)
+        else if(bird.speed < 50)
         {
-            Increase();
+           // Deplete(windParticle);
+            windline3L.SetActive(false);
+            windline3R.SetActive(false);
+        }  
+
+        if(bird.speed > 40)
+        {
+            windline2L.SetActive(true);
+            windline2R.SetActive(true);
         }
 
-      //  SpeedBurst();
+        else if(bird.speed < 40)
+        {
+            windline2L.SetActive(false);
+            windline2R.SetActive(false);
+        }
+
+        if(bird.speed > 30)
+        {
+            windline1L.SetActive(true);
+            windline1R.SetActive(true);
+        }
+
+        else if (bird.speed < 30)
+        {
+            windline1L.SetActive(false);
+            windline1R.SetActive(false);
+        }
+    }    
+
+    public void Deplete(GameObject particle)
+    {
+        var timer = depleteFrom;
+        timer -= Time.deltaTime * 8;
+        var emission = particle.GetComponent<ParticleSystem>().emission;
+        emission.rateOverTime = timer;
+        depleteFrom = timer;
+        if(timer < 40)
+        {
+            Destroy(windParticle);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("grass"))
+        if (other.gameObject.CompareTag("Water"))
         {
-            if (!grass)
+            if(!waterParticleL && !waterParticleR)
             {
-                grass = Instantiate(grassPrefab, grassPos.transform);
-                ps = grass.GetComponent<ParticleSystem>();
-                add = true;
-                time = 1;
+                waterParticleL = Instantiate(waterPrefab, waterPosL.transform);
+                waterParticleR = Instantiate(waterPrefab, waterPosR.transform);
             }
-        }
-
-        if (other.gameObject.CompareTag("cloud"))
-        {
-            if (!cloud)
-            {
-                cloud = Instantiate(cloudPrefab, cloudPos.transform);
-                ps = cloud.GetComponent<ParticleSystem>();
-                add = true;
-                time = 1;
-            }
-        }
-
-        if (other.gameObject.CompareTag("addflock"))
-        {
-            flock.NewFlockMember();
-        }
-
-        if (other.gameObject.CompareTag("removeflock"))
-        {
-           
-        }
-
-        if (other.gameObject.CompareTag("WindPoint"))
-        {
-            boosting = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("grass"))
+        if (other.gameObject.CompareTag("Water"))
         {
-            if (grass)
-            {
-                time = 100;
-                deplete = true;
-                StartCoroutine(Die(grass));
-            }
-        }
-
-        if (other.gameObject.CompareTag("cloud"))
-        {
-            if (cloud)
-            {
-                time = 100;
-                deplete = true;
-                StartCoroutine(Die(cloud));
-            }
+            Destroy(waterParticleL);
+            Destroy(waterParticleR);
         }
     }
-
-    public IEnumerator Die(GameObject toDestroy)
-    {
-        yield return new WaitForSeconds(2);
-        deplete = false;
-        Destroy(toDestroy);
-    }
-
-    void Reduce()
-    {
-        var emission = ps.emission;
-        time -= Time.deltaTime * 100;
-        emission.rateOverTime = time;
-    }
-
-    void Increase()
-    {
-        var emission = ps.emission;
-        time += Time.deltaTime * 100;
-        emission.rateOverTime = time;
-        if (time >= 100)
-        {
-            add = false;
-        }
-    }
-
-    /*void SpeedBurst()
-    {
-        if(boosting == true)
-        {
-            bird.baseSpeed = 50;
-            windcircle = Instantiate(windcircleprefab, windcirclePos.transform);
-            time = 100;
-            boosting = false;
-        }
-
-        else if(bird.baseSpeed > 10)
-        {
-            bird.baseSpeed -= Time.deltaTime * cooldown;
-            if (windcircle)
-            {
-                var wind = windcircle.GetComponent<ParticleSystem>();
-                var windemission = wind.emission;
-                time -= Time.deltaTime * 10;
-                windemission.rateOverTime = time;
-                if (time < 40)
-                {
-                    windcircle.transform.position = Vector3.Lerp(gameObject.transform.position, gameObject.transform.position + new Vector3(0,0,-10), Time.deltaTime);
-                }
-                if (time < 30)
-                {
-                    Destroy(windcircle);
-                }
-            }
-        }
-    }*/
-    
 }
