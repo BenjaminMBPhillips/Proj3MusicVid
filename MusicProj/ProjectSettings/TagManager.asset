@@ -15,6 +15,7 @@ TagManager:
   - ShowOnPause
   - ShowOnPlay
   - FlockParent
+  - Credits
   layers:
   - Default
   - TransparentFX
