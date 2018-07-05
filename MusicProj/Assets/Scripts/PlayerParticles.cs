@@ -54,7 +54,7 @@ public class PlayerParticles : MonoBehaviour
             windline3R.SetActive(false);
         }  
 
-        if(bird.speed > 40)
+       /* if(bird.speed > 40)
         {
             windline2L.SetActive(true);
             windline2R.SetActive(true);
@@ -76,7 +76,7 @@ public class PlayerParticles : MonoBehaviour
         {
             windline1L.SetActive(false);
             windline1R.SetActive(false);
-        }
+        }*/
     }    
 
     public void Deplete(GameObject particle)

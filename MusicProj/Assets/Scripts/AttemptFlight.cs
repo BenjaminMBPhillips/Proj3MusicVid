@@ -7,6 +7,8 @@ public class AttemptFlight : MonoBehaviour
     public GameObject birdModel,
         modelContainer;
 
+    public Animator anim;
+
     public PlayerParticles particles;
 
     public float smoothRot,
@@ -43,6 +45,11 @@ public class AttemptFlight : MonoBehaviour
     {
         var y = Input.GetAxis("Vertical");
         var x = Input.GetAxis("Horizontal");
+
+        if (y != 0)
+        {
+            anim.StopPlayback();
+        }
 
         #region Speed
         if (Input.GetKey(KeyCode.LeftShift))
@@ -84,7 +91,7 @@ public class AttemptFlight : MonoBehaviour
         }
         else if (ySpeed > 0 && y > 0 && !Input.GetKey(KeyCode.LeftShift))
         {
-            if(ySpeed  > 30)
+            if (ySpeed > 30)
             {
                 ySpeed -= Time.deltaTime * 6;
             }
@@ -104,7 +111,7 @@ public class AttemptFlight : MonoBehaviour
 
         #region Position
         rb.velocity = transform.forward * speed + transform.up * y * speed;
-        
+
         transform.Rotate(0, x, 0);
 
         float CheckTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
@@ -116,10 +123,10 @@ public class AttemptFlight : MonoBehaviour
             transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1, transform.position.z);
         }
 
-        if (CheckTerrainHeightModel > modelContainer.transform.position.y)
+        /*if (CheckTerrainHeightModel > modelContainer.transform.position.y)
         {
             modelContainer.transform.position = new Vector3(modelContainer.transform.position.x, CheckTerrainHeightModel + 1, modelContainer.transform.position.z);
-        }
+        }*/
         #endregion
 
     }
@@ -141,7 +148,7 @@ public class AttemptFlight : MonoBehaviour
         }
         else
         {
-            modelContainer.transform.Rotate((modelContainer.transform.rotation.y * -1) * 2, 0, 0);
+            modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) *8, 0, 0);
         }
 
 
