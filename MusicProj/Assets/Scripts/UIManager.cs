@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour {
     //Intro screen image
     public Image introScreen;
 
+    float speed = 0.2f;
+    bool crawling = false;
+
     //Pausing coroutine, slowly decreases timescale
     IEnumerator ScaleTime(float start, float end, float time)
     {
@@ -96,6 +99,14 @@ public class UIManager : MonoBehaviour {
             h.SetActive(true);
         }
     }
+    //Shows objects with credits tag
+    public void ShowCredits()
+    {
+        foreach (GameObject i in creditObjects)
+        {
+            i.SetActive(true);
+        }
+    }
     //Hides object with ShowOnPlay tag
     public void HidePlay()
     {
@@ -118,14 +129,6 @@ public class UIManager : MonoBehaviour {
         foreach (GameObject i in creditObjects)
         {
             i.SetActive(false);
-        }
-    }
-    //Shows objects with credits tag
-    public void ShowCredits()
-    {
-        foreach (GameObject i in creditObjects)
-        {
-            i.SetActive(true);
         }
     }
 
