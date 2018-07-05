@@ -41,19 +41,38 @@ public class AttemptFlight : MonoBehaviour
         var y = Input.GetAxis("Vertical");
         var x = Input.GetAxis("Horizontal");
         
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            ySpeed += Time.deltaTime * 2;
+            if(ySpeed > 30)
+            {
+                ySpeed = 30;
+            }
+        }
+        
         if(y < 0)
         {
             ySpeed += Time.deltaTime * 2;
-            if(ySpeed > 15)
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                ySpeed += Time.deltaTime * 4;
+
+                if(ySpeed > 30)
+                {
+                    ySpeed = 30;
+                }
+            }
+            else if(!Input.GetKey(KeyCode.LeftShift) && ySpeed > 15)
             {
                 ySpeed = 15;
             }
         }
-        else if(ySpeed > 0  && y == 0)
+        else if(ySpeed > 0  && y == 0 && !Input.GetKey(KeyCode.LeftShift))
         {
             ySpeed -= Time.deltaTime * 2;
         }
-        else if(ySpeed > 0 && y > 0)
+        else if(ySpeed > 0 && y > 0 && !Input.GetKey(KeyCode.LeftShift))
         {
             ySpeed -= Time.deltaTime * 4;
         }
@@ -63,7 +82,7 @@ public class AttemptFlight : MonoBehaviour
         if(speed < 20)
         {
             speed = 20;
-        }
+        }        
 
         rb.velocity = transform.forward * speed + transform.up * y * speed;
 
@@ -73,10 +92,18 @@ public class AttemptFlight : MonoBehaviour
 
         float CheckTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
 
+        float CheckTerrainHeightModel = Terrain.activeTerrain.SampleHeight(modelContainer.transform.position);
+
         if (CheckTerrainHeight > transform.position.y)
         {
             transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1, transform.position.z);
         }
+
+        if(CheckTerrainHeightModel > modelContainer.transform.position.y)
+        {
+            modelContainer.transform.position = new Vector3(modelContainer.transform.position.x, CheckTerrainHeightModel + 1, modelContainer.transform.position.z);
+        }
+
     }
     #endregion
 
@@ -88,9 +115,21 @@ public class AttemptFlight : MonoBehaviour
 
         birdModel.transform.LookAt(transform.position, transform.up);
 
-        // float modelxRot = Input.GetAxis("Horizontal");
+        float modelxRot = Input.GetAxis("Horizontal");
 
-        //modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
+        }
+        else
+        {
+            modelContainer.transform.Rotate((modelContainer.transform.rotation.y * -1) * 2, 0, 0);
+        }
+
+        
+
+
+
 
         #region Attempts
         /*Vector3 target = transform.position - birdModel.transform.position;
