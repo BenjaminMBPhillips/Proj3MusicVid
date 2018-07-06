@@ -33,12 +33,12 @@ public class FlockController : MonoBehaviour
 
     public void NewFlockMember()
     {
-        if(flockRight.Count == 0 && flockLeft.Count == 0)
+        if (flockRight.Count == 0 && flockLeft.Count == 0)
         {
             flockToFollow = player;
         }
 
-        if(flocksize%2 == 0)
+        if (flocksize % 2 == 0)
         {
             var addedFlock = Instantiate(flockPrefab, flockParent.transform, false);
             var addedScript = flockToFollow.AddComponent<FlockMemberFlight>();
@@ -49,7 +49,7 @@ public class FlockController : MonoBehaviour
             flocksize++;
         }
 
-        else if (flocksize%2 == 1)
+        else if (flocksize % 2 == 1)
         {
             var addedFlock = Instantiate(flockPrefab, flockParent.transform, false);
             var addedScript = addedFlock.GetComponent<FlockMemberFlight>();

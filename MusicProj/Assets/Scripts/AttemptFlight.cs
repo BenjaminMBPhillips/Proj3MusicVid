@@ -9,7 +9,7 @@ public class AttemptFlight : MonoBehaviour
 
     public Animator anim;
 
-    public PlayerParticles particles;
+    public PlayerInteractions particles;
 
     public float smoothRot,
         roll;
@@ -120,7 +120,7 @@ public class AttemptFlight : MonoBehaviour
 
         if (CheckTerrainHeight > transform.position.y)
         {
-            transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1, transform.position.z);
+            transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1000, transform.position.z);
         }
 
         /*if (CheckTerrainHeightModel > modelContainer.transform.position.y)

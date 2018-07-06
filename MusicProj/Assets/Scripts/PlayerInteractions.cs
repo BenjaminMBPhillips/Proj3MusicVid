@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerParticles : MonoBehaviour
+public class PlayerInteractions : MonoBehaviour
 {
     public AttemptFlight bird;
+
+    public FlockManager flock;
 
     public GameObject windPrefab,
         windParticle,
@@ -34,50 +36,28 @@ public class PlayerParticles : MonoBehaviour
         WindEffect();
     }
 
+    #region wind
     public void WindEffect()
     {
         if (bird.speed > 50)
         {
             windline3L.SetActive(true);
             windline3R.SetActive(true);
-            /*if (!windParticle)
+        }
+
+        else if (bird.speed < 50)
+        {
+            if(windline3R.activeInHierarchy == true)
             {
-                windParticle = Instantiate(windPrefab, windPos.transform);
-                depleteFrom = 100;
-            }*/
+
+                windline3L.transform.parent = null;
+                windline3R.transform.parent = null;
+            }
+            //windline3L.SetActive(false);
+            //windline3R.SetActive(false);
         }
-
-        else if(bird.speed < 50)
-        {
-           // Deplete(windParticle);
-            windline3L.SetActive(false);
-            windline3R.SetActive(false);
-        }  
-
-       /* if(bird.speed > 40)
-        {
-            windline2L.SetActive(true);
-            windline2R.SetActive(true);
-        }
-
-        else if(bird.speed < 40)
-        {
-            windline2L.SetActive(false);
-            windline2R.SetActive(false);
-        }
-
-        if(bird.speed > 30)
-        {
-            windline1L.SetActive(true);
-            windline1R.SetActive(true);
-        }
-
-        else if (bird.speed < 30)
-        {
-            windline1L.SetActive(false);
-            windline1R.SetActive(false);
-        }*/
     }    
+    #endregion
 
     public void Deplete(GameObject particle)
     {
@@ -92,15 +72,21 @@ public class PlayerParticles : MonoBehaviour
         }
     }
 
+    #region TriggerInteraction
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            if(!waterParticleL && !waterParticleR)
+            if (!waterParticleL && !waterParticleR)
             {
                 waterParticleL = Instantiate(waterPrefab, waterPosL.transform);
                 waterParticleR = Instantiate(waterPrefab, waterPosR.transform);
             }
+        }
+
+        if (other.gameObject.CompareTag("addflock"))
+        {
+            flock.AddToFlock();
         }
     }
 
@@ -111,5 +97,6 @@ public class PlayerParticles : MonoBehaviour
             Destroy(waterParticleL);
             Destroy(waterParticleR);
         }
-    }
+    } 
+    #endregion
 }
