@@ -15,20 +15,19 @@ public class PlayerInteractions : MonoBehaviour
         waterParticleL,
         waterParticleR,
         waterPosL,
-        waterPosR;
+        waterPosR,
+        windTrailPrefab,
+        windTrailL,
+        windTrailR;
 
     public GameObject windline1L,
-        windline1R,
-        windline2L,
-        windline2R,
-        windline3L,
-        windline3R;
+        windline1R;
 
     public float depleteFrom;
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
@@ -41,22 +40,24 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (bird.speed > 50)
         {
-            windline3L.SetActive(true);
-            windline3R.SetActive(true);
+            if (!windTrailR && !windTrailL)
+            {
+                windTrailL = Instantiate(windTrailPrefab, windline1L.transform, false);
+                windTrailR = Instantiate(windTrailPrefab, windline1R.transform, false);
+            }
         }
 
         else if (bird.speed < 50)
         {
-            if(windline3R.activeInHierarchy == true)
+            if (windTrailL && windTrailR)
             {
-
-                windline3L.transform.parent = null;
-                windline3R.transform.parent = null;
+                windTrailL.transform.parent = null;
+                windTrailR.transform.parent = null;
+                StartCoroutine(Delete(windTrailL, 2));
+                StartCoroutine(Delete(windTrailR, 2));
             }
-            //windline3L.SetActive(false);
-            //windline3R.SetActive(false);
         }
-    }    
+    }
     #endregion
 
     public void Deplete(GameObject particle)
@@ -66,7 +67,7 @@ public class PlayerInteractions : MonoBehaviour
         var emission = particle.GetComponent<ParticleSystem>().emission;
         emission.rateOverTime = timer;
         depleteFrom = timer;
-        if(timer < 40)
+        if (timer < 40)
         {
             Destroy(windParticle);
         }
@@ -94,9 +95,17 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            Destroy(waterParticleL);
-            Destroy(waterParticleR);
+            StartCoroutine(Delete(waterParticleL, 1));
+            StartCoroutine(Delete(waterParticleR, 1));
+            waterParticleL.transform.parent = null;
+            waterParticleR.transform.parent = null;
         }
-    } 
+    }
     #endregion
+
+    IEnumerator Delete(GameObject toDelete, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(toDelete);
+    }
 }

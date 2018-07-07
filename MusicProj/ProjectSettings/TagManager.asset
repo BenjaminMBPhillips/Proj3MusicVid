@@ -16,6 +16,7 @@ TagManager:
   - ShowOnPlay
   - FlockParent
   - Water
+  - FlockMan
   layers:
   - Default
   - TransparentFX
