@@ -7,29 +7,34 @@ public class AttemptFlight : MonoBehaviour
     public GameObject birdModel,
         modelContainer;
 
-    public Animator anim;
-
     public PlayerInteractions particles;
 
     public float smoothRot,
-        roll;
+        roll,
+        timer,
+        BRollCheck,
+        speed,
+        ySpeed,
+        xSpeed,
+        rollrot,
+        BRoll;
 
     public Input keydownRight,
         keydownLeft;
 
-    public float speed,
-        ySpeed,
-        xSpeed;
-
     public Vector3 offset;
 
-    public float rollrot;
+    public bool inbounds,
+        barrelRoll;
 
     public Rigidbody rb;
+
+    public float worldTime;
     // Use this for initialization
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        inbounds = true;
     }
 
     // Update is called once per frame
@@ -38,6 +43,15 @@ public class AttemptFlight : MonoBehaviour
         Movement();
         ModelMoveAndRotate();
         CamFollow();
+        worldTime += 1 * Time.deltaTime;
+        if (worldTime > 85 && worldTime < 105)
+        {
+            barrelRoll = true;
+        }
+        else
+        {
+            barrelRoll = false;
+        }
     }
 
     #region Movement
@@ -105,9 +119,19 @@ public class AttemptFlight : MonoBehaviour
         #endregion
 
         #region Position
+
         rb.velocity = transform.forward * speed + transform.up * y * speed;
 
-        transform.Rotate(0, x, 0);
+        if (inbounds == true)
+        {
+            transform.Rotate(0, x, 0);
+        }
+        else
+        {
+            var boundX = 70 * Time.deltaTime;
+            transform.Rotate(0, boundX, 0);
+            StartCoroutine(ResetBoundsTimer());
+        }
 
         float CheckTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
 
@@ -137,13 +161,21 @@ public class AttemptFlight : MonoBehaviour
 
         float modelxRot = Input.GetAxis("Horizontal");
 
-        if (Input.GetAxis("Horizontal") != 0)
+        if (barrelRoll == false)
         {
-            modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
+            timer = 2;
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
+            }
+            else
+            {
+                modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
+            }
         }
         else
         {
-            modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
+            BarrelRoll();
         }
 
 
@@ -177,6 +209,35 @@ public class AttemptFlight : MonoBehaviour
         #endregion
     }
 
+    public void BarrelRoll()
+    {
+        BRollCheck -= 1 * Time.deltaTime;
+        if (BRollCheck <= 0)
+        {
+            timer -= 2 * Time.deltaTime;
+            BRoll = 360 * Time.deltaTime;
+            modelContainer.transform.Rotate(BRoll, 0, 0);
+            if (timer <= 0)
+            {
+                BRollCheck = 3;
+                timer = 2;
+            }
+        }
+        else
+        {
+            float modelxRot = Input.GetAxis("Horizontal");
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
+            }
+            else
+            {
+                modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
+            }
+        }
+    }
+
+
     #endregion
 
     #region Camera
@@ -188,4 +249,19 @@ public class AttemptFlight : MonoBehaviour
         Camera.main.transform.LookAt(birdModel.transform.position + transform.forward * 30);
     }
     #endregion    
+
+    IEnumerator ResetBoundsTimer()
+    {
+        yield return new WaitForSeconds(2);
+        inbounds = true;
+    }
+
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("bounds"))
+        {
+            inbounds = false;
+        }
+    }
 }
