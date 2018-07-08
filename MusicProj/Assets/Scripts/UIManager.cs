@@ -9,12 +9,10 @@ public class UIManager : MonoBehaviour {
     GameObject[] pauseObjects;
     GameObject[] playObjects;
     GameObject[] creditObjects;
+    public AudioSource aud;
 
     //Intro screen image
     public Image introScreen;
-
-    float speed = 0.2f;
-    bool crawling = false;
 
     //Pausing coroutine, slowly decreases timescale
     IEnumerator ScaleTime(float start, float end, float time)
@@ -86,6 +84,10 @@ public class UIManager : MonoBehaviour {
     //shows objects with ShowOnPause tag
     public void ShowPaused()
     {
+        if (aud.isPlaying)
+        {
+            aud.Pause();
+        }
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(true);
@@ -94,6 +96,10 @@ public class UIManager : MonoBehaviour {
     //Shows objects with ShowOnPlay tag
     public void ShowPlay()
     {
+        if (aud.isPlaying)
+        {
+            aud.Stop();
+        }
         foreach (GameObject h in playObjects)
         {
             h.SetActive(true);
@@ -102,6 +108,10 @@ public class UIManager : MonoBehaviour {
     //Shows objects with credits tag
     public void ShowCredits()
     {
+        if (aud.isPlaying)
+        {
+            aud.Stop();
+        }
         foreach (GameObject i in creditObjects)
         {
             i.SetActive(true);
@@ -110,6 +120,7 @@ public class UIManager : MonoBehaviour {
     //Hides object with ShowOnPlay tag
     public void HidePlay()
     {
+        aud.Play();
         foreach (GameObject h in playObjects)
         {
             h.SetActive(false);
@@ -118,6 +129,7 @@ public class UIManager : MonoBehaviour {
     //hides objects with ShowOnPause tag
     public void HidePaused()
     {
+        aud.Play();
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(false);

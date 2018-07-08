@@ -52,6 +52,11 @@ public class AttemptFlight : MonoBehaviour
         {
             barrelRoll = false;
         }
+
+        if(worldTime > 154)
+        {
+            worldTime = 0;
+        }
     }
 
     #region Movement
@@ -135,17 +140,10 @@ public class AttemptFlight : MonoBehaviour
 
         float CheckTerrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
 
-        float CheckTerrainHeightModel = Terrain.activeTerrain.SampleHeight(modelContainer.transform.position);
-
         if (CheckTerrainHeight > transform.position.y)
         {
             transform.position = new Vector3(transform.position.x, CheckTerrainHeight + 1000, transform.position.z);
         }
-
-        /*if (CheckTerrainHeightModel > modelContainer.transform.position.y)
-        {
-            modelContainer.transform.position = new Vector3(modelContainer.transform.position.x, CheckTerrainHeightModel + 1, modelContainer.transform.position.z);
-        }*/
         #endregion
 
     }

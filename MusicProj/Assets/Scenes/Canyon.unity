@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5300552, g: 0.6379953, b: 0.71089536, a: 1}
+  m_IndirectSpecularColor: {r: 0.5300741, g: 0.6380004, b: 0.7108955, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -646,8 +646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36119628, y: 0.82900006}
   m_AnchorMax: {x: 0.64000005, y: 0.9257427}
-  m_AnchoredPosition: {x: 0.22973251, y: 129.71336}
-  m_SizeDelta: {x: 220.70657, y: 32.632698}
+  m_AnchoredPosition: {x: -2.2993, y: 103.4}
+  m_SizeDelta: {x: 456.53, y: 72.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &218469301
 MonoBehaviour:
@@ -670,18 +670,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: ef81621c90ad440418029334d0a16ed5, type: 3}
-    m_FontSize: 30
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 60
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Flappy Flying Thingo
+  m_Text: Sanctuary
 --- !u!222 &218469302
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1121,7 +1121,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.9150943, g: 0.8355545, b: 0.62588996, a: 1}
+  m_Color: {r: 0.9528302, g: 0.8112232, b: 0.43596476, a: 1}
   m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
@@ -1186,7 +1186,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 476083462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7be6d0a4a581b574f93a80db03d2767d, type: 3}
   m_Name: 
@@ -2526,10 +2526,10 @@ RectTransform:
   m_Father: {fileID: 1983530191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 900, y: 443}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1132853656
 Prefab:
@@ -2998,8 +2998,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1506923280}
-  m_LocalRotation: {x: 0.06775787, y: 0.0071704653, z: 0.00048705717, w: -0.99767596}
-  m_LocalPosition: {x: 442.8638, y: -146.82631, z: -381.24097}
+  m_LocalRotation: {x: 0.001822804, y: 0.042309843, z: 0.00007733353, w: -0.9991029}
+  m_LocalPosition: {x: 184.56244, y: -212.50713, z: -257.68314}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3912,6 +3912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6dbe53bd2c95154d8ce2af2cfd0f75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aud: {fileID: 454864574}
   introScreen: {fileID: 1100127716}
 --- !u!114 &1983530188
 MonoBehaviour:
