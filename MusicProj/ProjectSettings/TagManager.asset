@@ -18,6 +18,7 @@ TagManager:
   - Water
   - FlockMan
   - FX
+  - bounds
   layers:
   - Default
   - TransparentFX
