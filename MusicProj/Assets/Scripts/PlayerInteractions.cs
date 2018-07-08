@@ -8,6 +8,11 @@ public class PlayerInteractions : MonoBehaviour
 
     public FlockManager flock;
 
+    public AudioSource aud;
+
+    public AudioClip water1,
+        water2;
+
     public GameObject windPrefab,
         windParticle,
         windPos,
@@ -82,6 +87,24 @@ public class PlayerInteractions : MonoBehaviour
             {
                 waterParticleL = Instantiate(waterPrefab, waterPosL.transform);
                 waterParticleR = Instantiate(waterPrefab, waterPosR.transform);
+                if (aud.isPlaying)
+                {
+
+                }
+                else
+                {
+                    var rnd = Random.Range(0, 2);
+                    if (rnd == 0)
+                    {
+                        aud.clip = water1;
+                        aud.Play();
+                    }
+                    else
+                    {
+                        aud.clip = water2;
+                        aud.Play();
+                    }
+                }
             }
         }
 

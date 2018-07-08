@@ -17,6 +17,7 @@ TagManager:
   - FlockParent
   - Water
   - FlockMan
+  - FX
   layers:
   - Default
   - TransparentFX

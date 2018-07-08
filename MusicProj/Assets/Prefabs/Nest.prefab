@@ -2300,6 +2300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271d1ba5fba58a345bb7dc3877e800d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aud: {fileID: 0}
+  nest1: {fileID: 8300000, guid: c8c59659f1b61ee46b666d1e0c022b48, type: 3}
+  nest2: {fileID: 0}
 --- !u!135 &135567169517351350
 SphereCollider:
   m_ObjectHideFlags: 1

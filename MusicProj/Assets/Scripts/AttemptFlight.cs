@@ -44,7 +44,7 @@ public class AttemptFlight : MonoBehaviour
     void Movement()
     {
         var y = Input.GetAxis("Vertical");
-        var x = Input.GetAxis("Horizontal");        
+        var x = Input.GetAxis("Horizontal");
 
         #region Speed
         if (Input.GetKey(KeyCode.LeftShift))
@@ -136,7 +136,6 @@ public class AttemptFlight : MonoBehaviour
         birdModel.transform.LookAt(transform.position, transform.up);
 
         float modelxRot = Input.GetAxis("Horizontal");
-        print(modelxRot);
 
         if (Input.GetAxis("Horizontal") != 0)
         {
@@ -144,7 +143,7 @@ public class AttemptFlight : MonoBehaviour
         }
         else
         {
-            modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) *8, 0, 0);
+            modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
         }
 
 
