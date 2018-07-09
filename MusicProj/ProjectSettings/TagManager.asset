@@ -19,6 +19,8 @@ TagManager:
   - FlockMan
   - FX
   - bounds
+  - Credits
+  - Controls
   layers:
   - Default
   - TransparentFX
