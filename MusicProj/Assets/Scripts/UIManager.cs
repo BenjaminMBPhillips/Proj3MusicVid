@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
     GameObject[] pauseObjects;
     GameObject[] playObjects;
     GameObject[] creditObjects;
+    GameObject[] controlObjects;
     public AudioSource aud;
 
     //Intro screen image
@@ -56,6 +57,9 @@ public class UIManager : MonoBehaviour {
 
         creditObjects = GameObject.FindGameObjectsWithTag("Credits");
         HideCredits();
+
+        controlObjects = GameObject.FindGameObjectsWithTag("Controls");
+        HideControls();
     }
 	
 	// Update is called once per frame
@@ -117,6 +121,18 @@ public class UIManager : MonoBehaviour {
             i.SetActive(true);
         }
     }
+    //Shows objects with controls tag
+    public void ShowControls()
+    {
+        if (aud.isPlaying)
+        {
+            aud.Stop();
+        }
+        foreach (GameObject j in controlObjects)
+        {
+            j.SetActive(true);
+        }
+    }
     //Hides object with ShowOnPlay tag
     public void HidePlay()
     {
@@ -143,6 +159,15 @@ public class UIManager : MonoBehaviour {
             i.SetActive(false);
         }
     }
+    //Hides object with ShowOnPlay tag
+    public void HideControls()
+    {
+        aud.Play();
+        foreach (GameObject j in controlObjects)
+        {
+            j.SetActive(false);
+        }
+    }
 
     //Scene management
 
@@ -161,7 +186,7 @@ public class UIManager : MonoBehaviour {
     {
         Time.timeScale = 1;
         Fade();
-        HidePlay();
+        HideControls();
     }
     public void Quit()
     {
