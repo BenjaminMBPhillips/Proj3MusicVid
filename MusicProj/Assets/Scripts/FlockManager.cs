@@ -18,8 +18,8 @@ public class FlockManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        offsetR = new Vector3(4, 0, -5);
-        offsetL = new Vector3(-4, 0, -5);
+        offsetR = new Vector3(5, 0, -2);
+        offsetL = new Vector3(5, 0, 2);
     }
 
     // Update is called once per frame

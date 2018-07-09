@@ -10,22 +10,49 @@ public class Nests : MonoBehaviour
     public AudioClip nest1,
         nest2;
 
+    public bool disperse;
+
+    public GameObject bird1,
+        bird2,
+        bird1Mod,
+        bird2Mod;
+
     // Use this for initialization
     void Start()
     {
         aud = GameObject.FindGameObjectWithTag("FX").GetComponent<AudioSource>();
+        disperse = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(1, 1, 1);
+        if (disperse == false)
+        {
+            transform.Rotate(1, 1, 1);
+        }
+
+        else
+        {
+            var bird1rb = bird1.GetComponent<Rigidbody>();
+            var bird2rb = bird2.GetComponent<Rigidbody>();
+
+            /* TODO - make this work so birds stay in rotation
+            bird2Mod.transform.rotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.y, 0));
+            bird1Mod.transform.rotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.y, 0));
+            */
+
+            bird1rb.velocity = -bird1.transform.right * 100;
+            bird2rb.velocity = -bird2.transform.right * 100;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            disperse = true;
+            StartCoroutine(Destroy(3));
             if (aud.isPlaying)
             {
 
@@ -37,6 +64,11 @@ public class Nests : MonoBehaviour
 
             }
         }
+    }
+
+    IEnumerator Destroy(float time)
+    {
+        yield return new WaitForSeconds(time);
     }
 
 }

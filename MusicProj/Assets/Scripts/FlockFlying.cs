@@ -24,9 +24,9 @@ public class FlockFlying : MonoBehaviour
     {
         flockMan = GameObject.FindGameObjectWithTag("FlockMan").GetComponent<FlockManager>();
         player = GameObject.FindGameObjectWithTag("Player");
-        transform.position = player.transform.position + offset * 5;
+        transform.position = player.transform.position + player.transform.TransformDirection(offset) * 5;
         enter = true;
-        StartCoroutine(LeaveFlock(30));
+        //StartCoroutine(LeaveFlock(30));
     }
 
     // Update is called once per frame
@@ -36,13 +36,14 @@ public class FlockFlying : MonoBehaviour
         if (enter == true)
         {
             speed = 1;
-            transform.position = Vector3.Lerp(transform.position, player.transform.position + offset, speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, player.transform.position + player.transform.TransformDirection(offset), speed * 0.5f * Time.deltaTime);
         }
         else
         {
             Vector3 leaveOffset = -offset + new Vector3(0, -50, 0);
-            transform.position = Vector3.Lerp(transform.position, player.transform.position + leaveOffset, 0.5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, player.transform.position + player.transform.TransformDirection(leaveOffset), 0.5f * Time.deltaTime);
         }
+       
     }
 
     IEnumerator LeaveFlock(float timer)
