@@ -29,7 +29,7 @@ public class Nests : MonoBehaviour
     {
         if (disperse == false)
         {
-            transform.Rotate(1, 1, 1);
+            transform.Rotate(2, 2, 2);
         }
 
         else

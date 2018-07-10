@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FlockFlying : MonoBehaviour
 {
-
     public FlockManager flockMan;
 
     public Vector3 offset;
@@ -66,11 +65,9 @@ public class FlockFlying : MonoBehaviour
 
     void Rotation()
     {
-        float modelxRot = Input.GetAxis("Horizontal");
         if (Input.GetAxis("Horizontal") != 0)
         {
-            //model.transform.Rotate(-modelxRot, 0, 0);
-            // modelContainer.transform.Rotate(modelxRot, 0, 0);
+
         }
         else
         {
