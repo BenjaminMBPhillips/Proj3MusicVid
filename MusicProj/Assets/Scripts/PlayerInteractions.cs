@@ -28,7 +28,8 @@ public class PlayerInteractions : MonoBehaviour
     public GameObject windline1L,
         windline1R;
 
-    public float depleteFrom;
+    public float depleteFrom,
+        timer;
 
     private void Start()
     {
@@ -83,6 +84,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Water"))
         {
+            StartCoroutine(InWater());
             if (!waterParticleL && !waterParticleR)
             {
                 waterParticleL = Instantiate(waterPrefab, waterPosL.transform);
@@ -118,6 +120,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Water"))
         {
+            StopCoroutine(InWater());
             StartCoroutine(Delete(waterParticleL, 1));
             StartCoroutine(Delete(waterParticleR, 1));
             waterParticleL.transform.parent = null;
@@ -130,5 +133,11 @@ public class PlayerInteractions : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Destroy(toDelete);
+    }
+
+    IEnumerator InWater()
+    {
+        yield return new WaitForSeconds(2);
+        bird.inWater = true;
     }
 }

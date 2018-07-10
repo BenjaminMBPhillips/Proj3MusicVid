@@ -12,7 +12,8 @@ public class FlockFlying : MonoBehaviour
     public GameObject player,
         waterPrefab,
         waterL,
-        waterR;
+        waterR,
+        model;
 
     public float speed;
 
@@ -43,7 +44,7 @@ public class FlockFlying : MonoBehaviour
             Vector3 leaveOffset = -offset + new Vector3(0, -50, 0);
             transform.position = Vector3.Lerp(transform.position, player.transform.position + player.transform.TransformDirection(leaveOffset), 0.5f * Time.deltaTime);
         }
-       
+        Rotation();
     }
 
     IEnumerator LeaveFlock(float timer)
@@ -63,4 +64,18 @@ public class FlockFlying : MonoBehaviour
         }
     }
 
+    void Rotation()
+    {
+        float modelxRot = Input.GetAxis("Horizontal");
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            //model.transform.Rotate(-modelxRot, 0, 0);
+            // modelContainer.transform.Rotate(modelxRot, 0, 0);
+        }
+        else
+        {
+            model.transform.Rotate((model.transform.rotation.y) * 8, 0, 0);
+        }
+
+    }
 }

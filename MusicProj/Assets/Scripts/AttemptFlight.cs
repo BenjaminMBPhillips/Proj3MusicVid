@@ -5,7 +5,8 @@ using UnityEngine;
 public class AttemptFlight : MonoBehaviour
 {
     public GameObject birdModel,
-        modelContainer;
+        modelContainer,
+        modelContRotater;
 
     public PlayerInteractions particles;
 
@@ -25,7 +26,9 @@ public class AttemptFlight : MonoBehaviour
     public Vector3 offset;
 
     public bool inbounds,
-        barrelRoll;
+        barrelRoll,
+        isBoosting,
+        inWater;
 
     public Rigidbody rb;
 
@@ -44,16 +47,21 @@ public class AttemptFlight : MonoBehaviour
         ModelMoveAndRotate();
         CamFollow();
         worldTime += 1 * Time.deltaTime;
-        if (worldTime > 85 && worldTime < 105)
+        if (isBoosting == false)
+        {
+            BRoll = 0;
+        }
+        if (worldTime > 85 && worldTime < 100)
         {
             barrelRoll = true;
         }
         else
         {
             barrelRoll = false;
+            isBoosting = false;
         }
 
-        if(worldTime > 154)
+        if (worldTime > 154)
         {
             worldTime = 0;
         }
@@ -68,9 +76,14 @@ public class AttemptFlight : MonoBehaviour
         #region Speed
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            ySpeed += Time.deltaTime * 4;
+            ySpeed += Time.deltaTime * 10;
+            if (ySpeed < 30)
+            {
+                BoostRoll();
+            }
             if (ySpeed > 30)
             {
+                isBoosting = false;
                 ySpeed = 50;
             }
         }
@@ -80,10 +93,14 @@ public class AttemptFlight : MonoBehaviour
             ySpeed += Time.deltaTime * 2;
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                ySpeed += Time.deltaTime * 4;
-
+                ySpeed += Time.deltaTime * 10;
+                if (ySpeed < 30)
+                {
+                    BoostRoll();
+                }
                 if (ySpeed > 30)
                 {
+                    isBoosting = false;
                     ySpeed = 80;
                 }
             }
@@ -125,7 +142,20 @@ public class AttemptFlight : MonoBehaviour
 
         #region Position
 
-        rb.velocity = transform.forward * speed + transform.up * y * speed;
+
+        if (inWater == true)
+        {
+            rb.velocity = transform.forward * speed + transform.up * speed * 2;
+            StartCoroutine(ResetBoundsTimer());
+        }
+        else if (Input.GetAxis("Horizontal") != 0)
+        {
+            rb.velocity = transform.forward * speed + transform.up * y * speed * 2;
+        }
+        else
+        {
+            rb.velocity = transform.forward * speed + transform.up * y * speed;
+        }
 
         if (inbounds == true)
         {
@@ -164,18 +194,22 @@ public class AttemptFlight : MonoBehaviour
             timer = 2;
             if (Input.GetAxis("Horizontal") != 0)
             {
-                modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
+                modelContRotater.transform.Rotate(0.0f, 0.0f, -modelxRot);
+               // modelContainer.transform.Rotate(modelxRot, 0, 0);
             }
             else
             {
-                modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
+                modelContRotater.transform.Rotate(0, 0, (modelContRotater.transform.rotation.y * 1) * 8);
+                if (isBoosting == false)
+                {
+                    modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
+                }
             }
         }
         else
         {
             BarrelRoll();
         }
-
 
         #region Attempts
         /*Vector3 target = transform.position - birdModel.transform.position;
@@ -207,34 +241,20 @@ public class AttemptFlight : MonoBehaviour
         #endregion
     }
 
+    
     public void BarrelRoll()
     {
-        BRollCheck -= 1 * Time.deltaTime;
-        if (BRollCheck <= 0)
-        {
-            timer -= 2 * Time.deltaTime;
-            BRoll = 360 * Time.deltaTime;
-            modelContainer.transform.Rotate(BRoll, 0, 0);
-            if (timer <= 0)
-            {
-                BRollCheck = 3;
-                timer = 2;
-            }
-        }
-        else
-        {
-            float modelxRot = Input.GetAxis("Horizontal");
-            if (Input.GetAxis("Horizontal") != 0)
-            {
-                modelContainer.transform.Rotate(modelxRot, 0.0f, 0.0f);
-            }
-            else
-            {
-                modelContainer.transform.Rotate((modelContainer.transform.rotation.y * 1) * 8, 0, 0);
-            }
-        }
+        isBoosting = true;
+        BRoll += 2 * Time.deltaTime;
+        modelContainer.transform.Rotate(BRoll, 0, 0);
     }
 
+    public void BoostRoll()
+    {
+        isBoosting = true;
+        BRoll += 12 * Time.deltaTime;
+        modelContainer.transform.Rotate(BRoll, 0, 0);
+    }
 
     #endregion
 
@@ -246,12 +266,13 @@ public class AttemptFlight : MonoBehaviour
         Camera.main.transform.position = Camera.main.transform.position * bias + camMove * (1.0f - bias);
         Camera.main.transform.LookAt(birdModel.transform.position + transform.forward * 30);
     }
-    #endregion    
+    #endregion
 
     IEnumerator ResetBoundsTimer()
     {
         yield return new WaitForSeconds(2);
         inbounds = true;
+        inWater = false;
     }
 
 

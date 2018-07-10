@@ -42,8 +42,11 @@ public class Nests : MonoBehaviour
             bird1Mod.transform.rotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.y, 0));
             */
 
-            bird1rb.velocity = -bird1.transform.right * 100;
-            bird2rb.velocity = -bird2.transform.right * 100;
+            bird1.transform.parent = null;
+            bird2.transform.parent = null;
+
+            bird1rb.velocity = -bird1.transform.right * 50;
+            bird2rb.velocity = -bird2.transform.right * 50;
         }
     }
 
@@ -61,7 +64,6 @@ public class Nests : MonoBehaviour
             {
                 aud.clip = nest1;
                 aud.Play();
-
             }
         }
     }
@@ -69,6 +71,9 @@ public class Nests : MonoBehaviour
     IEnumerator Destroy(float time)
     {
         yield return new WaitForSeconds(time);
+        Destroy(bird1);
+        Destroy(bird2);
+        Destroy(gameObject);
     }
 
 }
