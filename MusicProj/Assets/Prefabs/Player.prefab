@@ -1069,7 +1069,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1517025036321318}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3002, y: 107, z: 2378}
+  m_LocalPosition: {x: 3180, y: 107, z: 655}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4455937912054500}
@@ -1643,6 +1643,7 @@ MonoBehaviour:
   inbounds: 0
   barrelRoll: 0
   isBoosting: 0
+  inWater: 0
   rb: {fileID: 0}
   worldTime: 0
 --- !u!114 &114438899320122864
@@ -1677,6 +1678,7 @@ MonoBehaviour:
   windline1L: {fileID: 1200609135222944}
   windline1R: {fileID: 1677097600743936}
   depleteFrom: 0
+  timer: 0
 --- !u!124 &124075655034350404
 Behaviour:
   m_ObjectHideFlags: 1
