@@ -95,7 +95,9 @@ public class FlockFlying : MonoBehaviour
         if (other.gameObject.CompareTag("Water"))
         {
             StartCoroutine(Delete(waterLPart, 0.5f));
+            waterLPart.transform.parent = null;
             StartCoroutine(Delete(waterRPart, 0.5f));
+            waterRPart.transform.parent = null;
         }
     }
 
