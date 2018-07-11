@@ -10,8 +10,10 @@ public class FlockFlying : MonoBehaviour
 
     public GameObject player,
         waterPrefab,
-        waterL,
-        waterR,
+        waterLPos,
+        waterLPart,
+        waterRPos,
+        waterRPart,
         model;
 
     public float speed;
@@ -74,5 +76,32 @@ public class FlockFlying : MonoBehaviour
             model.transform.Rotate((model.transform.rotation.y) * 8, 0, 0);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            if(!waterLPart && !waterRPart)
+            {
+                waterLPart = Instantiate(waterPrefab, waterLPos.transform);
+                waterRPart = Instantiate(waterPrefab, waterRPos.transform);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            StartCoroutine(Delete(waterLPart, 0.5f));
+            StartCoroutine(Delete(waterRPart, 0.5f));
+        }
+    }
+
+    IEnumerator Delete(GameObject toDelete, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(toDelete);
     }
 }

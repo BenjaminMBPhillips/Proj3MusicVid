@@ -150,7 +150,7 @@ public class AttemptFlight : MonoBehaviour
         }
         else if (Input.GetAxis("Horizontal") != 0)
         {
-            rb.velocity = transform.forward * speed + transform.up * y * speed * 2;
+            rb.velocity = transform.forward * speed + transform.up * y * speed * 1.5f;
         }
         else
         {
@@ -252,7 +252,7 @@ public class AttemptFlight : MonoBehaviour
     public void BoostRoll()
     {
         isBoosting = true;
-        BRoll += 12 * Time.deltaTime;
+        BRoll += 13 * Time.deltaTime;
         modelContainer.transform.Rotate(BRoll, 0, 0);
     }
 

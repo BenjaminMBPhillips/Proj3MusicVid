@@ -28,17 +28,23 @@ public class PlayerInteractions : MonoBehaviour
     public GameObject windline1L,
         windline1R;
 
+    public bool countDown;
+
     public float depleteFrom,
         timer;
 
     private void Start()
     {
-
+        countDown = false;
     }
 
     private void Update()
     {
         WindEffect();
+        if(countDown == true)
+        {
+            InWater();
+        }
     }
 
     #region wind
@@ -84,7 +90,8 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            StartCoroutine(InWater());
+            timer = 2;
+            countDown = true;
             if (!waterParticleL && !waterParticleR)
             {
                 waterParticleL = Instantiate(waterPrefab, waterPosL.transform);
@@ -120,7 +127,8 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Water"))
         {
-            StopCoroutine(InWater());
+            print("leave");
+            countDown = false;
             StartCoroutine(Delete(waterParticleL, 1));
             StartCoroutine(Delete(waterParticleR, 1));
             waterParticleL.transform.parent = null;
@@ -135,9 +143,12 @@ public class PlayerInteractions : MonoBehaviour
         Destroy(toDelete);
     }
 
-    IEnumerator InWater()
+    public void InWater()
     {
-        yield return new WaitForSeconds(2);
-        bird.inWater = true;
+        timer -= 1 * Time.deltaTime;
+        if (timer <= 0)
+        {
+            bird.inWater = true;
+        }
     }
 }

@@ -21,6 +21,7 @@ TagManager:
   - bounds
   - Credits
   - Controls
+  - Terrain
   layers:
   - Default
   - TransparentFX
