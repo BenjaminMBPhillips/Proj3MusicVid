@@ -37,11 +37,6 @@ public class Nests : MonoBehaviour
             var bird1rb = bird1.GetComponent<Rigidbody>();
             var bird2rb = bird2.GetComponent<Rigidbody>();
 
-            /* TODO - make this work so birds stay in rotation
-            bird2Mod.transform.rotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.y, 0));
-            bird1Mod.transform.rotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.y, 0));
-            */
-
             bird1.transform.parent = null;
             bird2.transform.parent = null;
 

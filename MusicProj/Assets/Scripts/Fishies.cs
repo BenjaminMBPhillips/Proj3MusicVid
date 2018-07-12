@@ -19,7 +19,7 @@ public class Fishies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rotator.transform.Rotate(0, 0, 12);
+        rotator.transform.Rotate(0, 0, 5);
 
         if(swimming == true)
         {

@@ -28,22 +28,34 @@ public class AttemptFlight : MonoBehaviour
     public bool inbounds,
         barrelRoll,
         isBoosting,
-        inWater;
+        inWater,
+        canBoost,
+        inTunnel;
 
     public Rigidbody rb;
 
     public float worldTime;
+
     // Use this for initialization
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         inbounds = true;
+        canBoost = true;
+        inTunnel = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (inTunnel == true)
+        {
+            WindTunnel();
+        }
+        else
+        {
+            Movement();
+        }
         ModelMoveAndRotate();
         CamFollow();
         worldTime += 1 * Time.deltaTime;
@@ -53,10 +65,12 @@ public class AttemptFlight : MonoBehaviour
         }
         if (worldTime > 85 && worldTime < 100)
         {
+            canBoost = false;
             barrelRoll = true;
         }
         else
         {
+            canBoost = true;
             barrelRoll = false;
             isBoosting = false;
         }
@@ -245,15 +259,18 @@ public class AttemptFlight : MonoBehaviour
     public void BarrelRoll()
     {
         isBoosting = true;
-        BRoll += 2 * Time.deltaTime;
+        BRoll += 1 * Time.deltaTime;
         modelContainer.transform.Rotate(BRoll, 0, 0);
     }
 
     public void BoostRoll()
     {
-        isBoosting = true;
-        BRoll += 13 * Time.deltaTime;
-        modelContainer.transform.Rotate(BRoll, 0, 0);
+        if (canBoost == true)
+        {
+            isBoosting = true;
+            BRoll += 8 * Time.deltaTime;
+            modelContainer.transform.Rotate(BRoll, 0, 0);
+        }
     }
 
     #endregion
@@ -273,6 +290,13 @@ public class AttemptFlight : MonoBehaviour
         yield return new WaitForSeconds(2);
         inbounds = true;
         inWater = false;
+        inTunnel = false;
+    }
+
+    public void WindTunnel()
+    {
+        rb.velocity = transform.forward * speed + transform.up * speed * 4;
+        StartCoroutine(ResetBoundsTimer());
     }
 
 
@@ -281,6 +305,15 @@ public class AttemptFlight : MonoBehaviour
         if (other.gameObject.CompareTag("bounds"))
         {
             inbounds = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("WindTunnel"))
+        {
+            inTunnel = true;
+            StartCoroutine(ResetBoundsTimer());
         }
     }
 }

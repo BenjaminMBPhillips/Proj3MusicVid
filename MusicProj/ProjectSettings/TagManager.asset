@@ -22,6 +22,7 @@ TagManager:
   - Credits
   - Controls
   - Terrain
+  - WindTunnel
   layers:
   - Default
   - TransparentFX
