@@ -61,7 +61,7 @@ Material:
     m_Floats:
     - <noninit>: 1
     - _AO: 1.27
-    - _BaseLight: 0.254
+    - _BaseLight: 1
     - _BumpScale: 1
     - _Cutoff: 0.25
     - _DetailNormalMapScale: 1

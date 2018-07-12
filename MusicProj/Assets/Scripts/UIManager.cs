@@ -100,10 +100,6 @@ public class UIManager : MonoBehaviour {
     //Shows objects with ShowOnPlay tag
     public void ShowPlay()
     {
-        if (aud.isPlaying)
-        {
-            aud.Stop();
-        }
         foreach (GameObject h in playObjects)
         {
             h.SetActive(true);
@@ -112,10 +108,6 @@ public class UIManager : MonoBehaviour {
     //Shows objects with credits tag
     public void ShowCredits()
     {
-        if (aud.isPlaying)
-        {
-            aud.Stop();
-        }
         foreach (GameObject i in creditObjects)
         {
             i.SetActive(true);
@@ -124,10 +116,6 @@ public class UIManager : MonoBehaviour {
     //Shows objects with controls tag
     public void ShowControls()
     {
-        if (aud.isPlaying)
-        {
-            aud.Stop();
-        }
         foreach (GameObject j in controlObjects)
         {
             j.SetActive(true);
@@ -136,7 +124,6 @@ public class UIManager : MonoBehaviour {
     //Hides object with ShowOnPlay tag
     public void HidePlay()
     {
-        aud.Play();
         foreach (GameObject h in playObjects)
         {
             h.SetActive(false);
@@ -145,7 +132,6 @@ public class UIManager : MonoBehaviour {
     //hides objects with ShowOnPause tag
     public void HidePaused()
     {
-        aud.Play();
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(false);
@@ -162,7 +148,6 @@ public class UIManager : MonoBehaviour {
     //Hides object with ShowOnPlay tag
     public void HideControls()
     {
-        aud.Play();
         foreach (GameObject j in controlObjects)
         {
             j.SetActive(false);
@@ -174,16 +159,22 @@ public class UIManager : MonoBehaviour {
     //Reloads scene
     public void MainMenu()
     {
+        if (aud.isPlaying)
+        {
+            aud.Stop();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     //Sets timescale to 1 and runs pause menu coroutine
     public void Resume()
     {
+        aud.UnPause();
         StartCoroutine(ScaleTime(0.0f, 1.0f, 1.0f));
         StartCoroutine(SlowPlay());
     }
     public void Play()
     {
+        aud.Play();
         Time.timeScale = 1;
         Fade();
         HideControls();
